@@ -12,7 +12,19 @@ export const store = createStore(
     products(products = defaultState.products, action) {
       switch (action.type) {
         case mutations.CREATE_PRODUCT:
-          console.log(action);
+          // console.log(action);
+          return [
+            ...products,
+            {
+              name: action.name,
+              id: action.id,
+              category: action.category,
+              owner: action.ownerID,
+              price: action.price,
+              units: action.units,
+              isAvailable: action.isAvailable
+            }
+          ];
       }
       return products;
     },

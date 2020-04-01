@@ -5,14 +5,24 @@ import { v4 as uuidv4 } from "uuid";
 
 export function* productCreationSaga() {
   while (true) {
-    yield take(mutations.REQUEST_PRODUCT_CREATION);
+    const { product } = yield take(mutations.REQUEST_PRODUCT_CREATION);
     const ownerID = "U1";
-    const categoryID = "C2";
-    const price = 150;
-    const units = 10;
+    const name = product.name;
+    const category = product.category;
+    const isAvailable = product.isAvailable;
+    const price = product.price;
+    const units = product.units;
     const productID = uuidv4();
     yield put(
-      mutations.createProduct(productID, categoryID, ownerID, price, units)
+      mutations.createProduct(
+        productID,
+        ownerID,
+        name,
+        category,
+        price,
+        units,
+        isAvailable
+      )
     );
     console.log("Creating new product");
   }

@@ -12,23 +12,28 @@ export const CREATE_PRODUCT = `CREATE_PRODUCT`;
 // export const NOT_AUTHENTICATED = `NOT_AUTHENTICATED`;
 // export const SET_STATE = `SET_STATE`;
 
-export const requestProductCreation = () => ({
-  type: REQUEST_PRODUCT_CREATION
+export const requestProductCreation = product => ({
+  type: REQUEST_PRODUCT_CREATION,
+  product
 });
 
 export const createProduct = (
-  productID,
-  categoryID,
+  id,
   ownerID,
+  name,
+  category,
   price,
-  units
+  units,
+  isAvailable
 ) => ({
   type: CREATE_PRODUCT,
-  productID,
-  categoryID,
+  id,
   ownerID,
+  name,
+  category,
   price,
-  units
+  units,
+  isAvailable
 });
 
 // export const requestProductCreation = categoryID => ({
