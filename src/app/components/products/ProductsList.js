@@ -37,15 +37,14 @@ export const ProductsList = ({ products, categories, users }) => {
           })}
         </tbody>
       </table>
-      <button>
-        <Link to="/products/new">Add New Product</Link>
-      </button>
+      <Link to="/products/new">
+        <button>Add New Product</button>
+      </Link>
     </>
   );
 };
 
 function mapStateToProps(state) {
-  
   return {
     users: state.users,
     categories: state.categories,

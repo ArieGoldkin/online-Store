@@ -1,36 +1,42 @@
+import md5 from "md5";
+
 export const defaultState = {
   // session: {
-  //   authenticated: false
+  //   authenticated: false,
   // },
   users: [
     {
       id: "U1",
-      name: "Arie"
-      //   passwordHash: md5("GOLDKIN")
+      name: "Arie",
+      passwordHash: md5("GOLD"),
     },
     {
       id: "U2",
-      name: "Liroy"
-      //   passwordHash: md5("LIROY")
-    }
+      name: "Liroy",
+      passwordHash: md5("LIROY"),
+    },
   ],
   categories: [
     {
+      name: null,
+      id: null,
+    },
+    {
       name: "Watches",
-      id: "C1"
+      id: "C1",
     },
     {
       name: "Cameras",
-      id: "C2"
+      id: "C2",
     },
     {
       name: "Motion Sensors",
-      id: "C3"
+      id: "C3",
     },
     {
       name: "Maskes",
-      id: "C4"
-    }
+      id: "C4",
+    },
   ],
   products: [
     {
@@ -40,7 +46,7 @@ export const defaultState = {
       owner: "U1",
       price: 255,
       units: 5,
-      isAvailable: true
+      isAvailable: true,
     },
     {
       name:
@@ -50,7 +56,7 @@ export const defaultState = {
       owner: "U1",
       price: 100,
       units: 10,
-      isAvailable: true
+      isAvailable: true,
     },
     {
       name: "Sports Replacement Nylon Strap For Fitbit Versa 2",
@@ -59,7 +65,7 @@ export const defaultState = {
       owner: "U2",
       price: 20,
       units: 20,
-      isAvailable: true
+      isAvailable: true,
     },
     {
       name: "pot KN95 Mask SmartMi PM2.5 Mist Mask",
@@ -68,7 +74,7 @@ export const defaultState = {
       owner: "U2",
       price: 14,
       units: 0,
-      isAvailable: false
+      isAvailable: false,
     },
     {
       name: "Hyman Z-Wave PIR Motion",
@@ -77,15 +83,15 @@ export const defaultState = {
       owner: "U2",
       price: 44,
       units: 14,
-      isAvailable: true
-    }
+      isAvailable: true,
+    },
   ],
   comments: [
     {
       owner: "U1",
       id: "C1",
       product: "P1",
-      content: "What colors are available?"
-    }
-  ]
+      content: "What colors are available?",
+    },
+  ],
 };

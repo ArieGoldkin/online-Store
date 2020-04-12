@@ -2,8 +2,11 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { connectDB } from "./connect-db";
+import "./initialize-db";
+import { authenticationRoute } from "./authenticate";
+import path from "path";
 
-let port = 9999;
+let port = process.env.PORT || 9999;
 let app = express();
 
 app.listen(port, console.log("Server is listening on port", port));
@@ -14,13 +17,22 @@ app.listen(port, console.log("Server is listening on port", port));
 
 app.use(cors(), bodyParser.urlencoded({ extended: true }), bodyParser.json());
 
-export const addNewProduct = async product => {
+authenticationRoute(app);
+
+if (process.env.NODE_ENV == `production`) {
+  app.use(express.static(path.resolve(__dirname, `../../dist`)));
+  app.get("/*", (req, res) => {
+    res.sendFile(path.resolve("index.html"));
+  });
+}
+
+export const addNewProduct = async (product) => {
   let db = await connectDB();
   let collection = db.collection(`products`);
   await collection.insertOne(product);
 };
 
-export const updateProduct = async product => {
+export const updateProduct = async (product) => {
   let { id, category, name, price, units, isAvailable } = product;
   let db = await connectDB();
   let collection = db.collection(`products`);

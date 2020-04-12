@@ -3,35 +3,48 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import * as mutations from "../../store/mutations";
 
-export const AddNewProduct = ({ categories, createNewProduct }) => {
+export const AddNewProduct = ({
+  categories,
+  createNewProduct,
+  isAvailable,
+}) => {
   const [product, setProduct] = useState({
     name: "",
     category: "",
     isAvailable: false,
     price: "",
-    units: ""
+    units: "",
   });
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setProduct({
-      ...product,
+
+    setProduct((prevProduct) => ({
+      ...prevProduct,
       [name]: name === "name" ? value : value,
       [name]: name === "category" ? value : value,
-      [name]: name === "price" ? parseInt(value) : value,
-      [name]: name === "units" ? parseInt(value) : value
-    });
+      [name]: name === "price" ? parseInt(value, 10) : value, // need to fix integer value
+      [name]: name === "units" ? parseInt(value, 10) : value,
+      isAvailable: product.units < 0 || product.units === " " ? false : true, // need to fix problem
+    }));
   }
-  console.log(product);
 
+  console.log(product.units);
+  console.log(product.isAvailable);
+  console.log(product);
   return (
     <>
       <h2>New Product</h2>
       <div>
         <label>Product Name:</label>
-        <input type="text" name="name" onChange={handleChange} />
+        <input
+          type="text"
+          name="name"
+          onChange={handleChange}
+          value={product.name}
+        />
       </div>
-      <div>Available</div>
+      <div>{product.isAvailable ? "Available" : "Not Available"}</div>
       <div>
         <label>Category:</label>
         <select
@@ -39,7 +52,7 @@ export const AddNewProduct = ({ categories, createNewProduct }) => {
           onChange={handleChange}
           value={product.category}
         >
-          {categories.map(category => {
+          {categories.map((category) => {
             return (
               <option key={category.id} value={category.id}>
                 {category.name}
@@ -50,16 +63,26 @@ export const AddNewProduct = ({ categories, createNewProduct }) => {
       </div>
       <div>
         <label>Price:</label>
-        <input type="number" name="price" onChange={handleChange} />
+        <input
+          type="number"
+          name="price"
+          onChange={handleChange}
+          value={product.price}
+        />
       </div>
       <div>
         <label>Units:</label>
-        <input type="number" name="units" onChange={handleChange} />
+        <input
+          type="number"
+          name="units"
+          onChange={handleChange}
+          value={product.units}
+        />
       </div>
       <div>
-        <button onClick={() => createNewProduct(product)}>
-          <Link to="/products">Save</Link>
-        </button>
+        <Link to="/products">
+          <button onClick={() => createNewProduct(product)}>Save</button>
+        </Link>
       </div>
     </>
   );
@@ -67,7 +90,7 @@ export const AddNewProduct = ({ categories, createNewProduct }) => {
 
 const mapStateToProps = (state, ownPrps) => {
   return {
-    categories: state.categories
+    categories: state.categories,
   };
 };
 
@@ -75,7 +98,7 @@ const mapDispatchToProps = (dispatch, ownPrps) => {
   return {
     createNewProduct(product) {
       dispatch(mutations.requestProductCreation(product));
-    }
+    },
   };
 };
 
